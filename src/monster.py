@@ -11,7 +11,7 @@ Please go through the following chat conversation and point out any grammatical 
 
 Chat Conversation:
 ----------------------
-""" # noqa
+"""  # noqa
 
 
 async def check_grammar(message):
@@ -26,7 +26,11 @@ async def check_grammar(message):
     )
     final_response = response.choices[0]
 
-    if final_response.message.content.lower()[:6] == "empty":
+    chat_message = final_response.message.content.lower()
+    if (
+            final_response.message.content.lower()[:6] == "empty" or
+            chat_message == 'there are no grammatical errors in this chat message.'
+    ):
         return None
 
     return final_response
