@@ -26,7 +26,7 @@ async def check_grammar(message):
     )
     final_response = response.choices[0]
 
-    if final_response.message.content.lower() in ("empty", "empty."):
+    if final_response.message.content.lower()[:6] == "empty":
         return None
 
     return final_response
