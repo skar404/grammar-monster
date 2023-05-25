@@ -7,7 +7,6 @@ version = "0.1.0"
 description = ""
 authors = ["Denis Malin <denis@malina.page>"]
 readme = "README.md"
-packages = [{include = "grammar_monster_bot"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
