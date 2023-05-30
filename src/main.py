@@ -45,7 +45,7 @@ async def pong_handler(_client: Client, message: Message):
 
 
 @app.on_message()
-async def monster_handler(_client: Client, message: Message):
+async def monster_handler(client: Client, message: Message):
     chat = message.chat
     if chat.id not in settings.available_chats:
         log.info('monster_handler not available chat id=%s name=%s', chat.id, chat.title)
@@ -56,7 +56,12 @@ async def monster_handler(_client: Client, message: Message):
         return
     log.info('monster_handler reqeust=%s', monster_request)
 
-    await message.reply_text(monster_request.message.content)
+    await client.send_message(
+        settings.tmp_chat,
+        f"> {message.text}"
+        "\n\n**Monster response:**"
+        f"\n{monster_request.message.content}"
+    )
 
 
 @app.on_message(filters.command(['del']) & filters.reply, group=1)

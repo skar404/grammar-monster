@@ -14,6 +14,8 @@ class Settings(BaseSettings):
 
     available_chats: Set[int] = set()
 
+    tmp_chat: int
+
     class Config:
         env_file = '.env', '../.env'
 

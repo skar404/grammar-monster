@@ -34,3 +34,10 @@ async def check_grammar(message):
         return None
 
     return final_response
+
+
+if __name__ == '__main__':
+    # debug code
+    import asyncio
+    data = asyncio.run(check_grammar(""""""))
+    print(data)
