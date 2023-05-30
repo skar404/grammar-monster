@@ -56,12 +56,19 @@ async def monster_handler(client: Client, message: Message):
         return
     log.info('monster_handler reqeust=%s', monster_request)
 
-    await client.send_message(
-        settings.tmp_chat,
-        f"> {message.text}"
-        "\n\n**Monster response:**"
-        f"\n{monster_request.message.content}"
-    )
+    if chat.id == settings.prod_chat:
+        await client.send_message(
+            settings.tmp_chat,
+            f"> {message.text}"
+            "\n\n**Monster response:**"
+            f"\n{monster_request.message.content}",
+            disable_notification=True,
+        )
+    else:
+        await message.reply_text(
+            monster_request.message.content,
+            disable_notification=True,
+        )
 
 
 @app.on_message(filters.command(['del']) & filters.reply, group=1)
