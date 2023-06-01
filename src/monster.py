@@ -1,3 +1,5 @@
+from typing import Optional
+
 import openai
 
 from settings import settings
@@ -9,7 +11,7 @@ Message: ```{message}```
 """  # noqa
 
 
-async def check_grammar(message):
+async def check_grammar(message: str) -> Optional[str]:
     openai.api_key = settings.openai_token
 
     response = await openai.Completion.acreate(
