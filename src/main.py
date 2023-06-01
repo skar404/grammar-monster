@@ -44,7 +44,7 @@ async def pong_handler(_client: Client, message: Message):
     await message.reply_text('pong')
 
 
-@app.on_message()
+@app.on_message(filters=filters.text)
 async def monster_handler(client: Client, message: Message):
     chat = message.chat
     if chat.id not in settings.available_chats:

@@ -3,34 +3,27 @@ import openai
 from settings import settings
 
 prompt = """
-Dear GPT-3.5 Turbo,
+Go through the following chat conversation and point out any grammatical errors you see. If there are no errors, please respond with 'Empty'
 
-I'm designing a bot that will check for grammatical errors in chat conversations. I need your help in identifying these errors and reporting them back to me.
-
-Please go through the following chat conversation and point out any grammatical errors you see. If there are no errors, please respond with 'Empty'.
-
-Chat Conversation:
-----------------------
+Message: ```{message}```
 """  # noqa
 
 
 async def check_grammar(message):
     openai.api_key = settings.openai_token
 
-    response = await openai.ChatCompletion.acreate(
-        model="gpt-3.5-turbo-0301",
-        messages=[
-            {"role": "system", "content": prompt},
-            {"role": "user", "content": message},
-        ],
+    response = await openai.Completion.acreate(
+        model="text-davinci-003",
+        prompt=prompt.format(message=message),
+        temperature=0,
+        max_tokens=60,
+        top_p=1.0,
+        frequency_penalty=0.0,
+        presence_penalty=0.0
     )
-    final_response = response.choices[0]
 
-    chat_message = final_response.message.content.lower()
-    if (
-            final_response.message.content.lower()[:6] == "empty" or
-            chat_message == 'there are no grammatical errors in this chat message.'
-    ):
+    final_response = response.choices[0].text
+    if final_response.lower().strip() == 'empty':
         return None
 
     return final_response
@@ -39,5 +32,6 @@ async def check_grammar(message):
 if __name__ == '__main__':
     # debug code
     import asyncio
-    data = asyncio.run(check_grammar(""""""))
+
+    data = asyncio.run(check_grammar("""emptys"""))
     print(data)
