@@ -61,12 +61,12 @@ async def monster_handler(client: Client, message: Message):
             settings.tmp_chat,
             f"> {message.text}"
             "\n\n**Monster response:**"
-            f"\n{monster_request.message.content}",
+            f"\n{monster_request}",
             disable_notification=True,
         )
     else:
         await message.reply_text(
-            monster_request.message.content,
+            monster_request,
             disable_notification=True,
         )
 
