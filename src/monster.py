@@ -4,10 +4,8 @@ import openai
 
 from settings import settings
 
-prompt = """
-Go through the following chat conversation and point out any grammatical errors you see. If there are no errors, please respond with 'Empty'
-
-Message: ```{message}```
+prompt = """Check English grammatical in the chat and write about mistake with detail, you need say "Empty" if you don't see any mistakes.
+Chat message: {message}
 """  # noqa
 
 
@@ -18,14 +16,14 @@ async def check_grammar(message: str) -> Optional[str]:
         model="text-davinci-003",
         prompt=prompt.format(message=message),
         temperature=0,
-        max_tokens=60,
+        max_tokens=len(prompt.format(message=message)),
         top_p=1.0,
         frequency_penalty=0.0,
         presence_penalty=0.0
     )
 
     final_response = response.choices[0].text
-    if final_response.lower().strip() == 'empty':
+    if final_response.lower().strip().replace('.', '') == 'empty':
         return None
 
     return final_response
